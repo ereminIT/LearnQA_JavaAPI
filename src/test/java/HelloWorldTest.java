@@ -32,5 +32,29 @@ public class HelloWorldTest {
         String locationHeader = response.getHeader("Location");
         System.out.println(locationHeader);
     }
+    //Ex7: Долгий редирект
+    @Test
+    public void testRestAssuredLongRedirect() {
+        int countStep = 0;
+        int statusCode = 0;
+        String locationHeader = "https://playground.learnqa.ru/api/long_redirect";
+        while (true){
+            Response response = RestAssured
+                    .given()
+                    .redirects()
+                    .follow(false)
+                    .when()
+                    .get(locationHeader)
+                    .andReturn();
+            statusCode = response.getStatusCode();
+            if (statusCode == 200){
+                break;
+            }
+            countStep +=1;
+            locationHeader = response.getHeader("Location");
+        }
+        System.out.println("Количество редиректов:"+countStep+"\nИтоговый адрес:"+locationHeader);
+
+    }
 
 }
