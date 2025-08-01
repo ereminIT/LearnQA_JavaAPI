@@ -56,5 +56,38 @@ public class HelloWorldTest {
         System.out.println("Количество редиректов:"+countStep+"\nИтоговый адрес:"+locationHeader);
 
     }
+    //Ex8: Токены
+    @Test
+    public void testToken() throws InterruptedException {
+        String path = "https://playground.learnqa.ru/ajax/api/longtime_job";
+        JsonPath response = RestAssured
+                .get(path)
+                .jsonPath();
+        String token = response.get("token");
+        System.out.println(token);
+        int seconds = response.get("seconds");
+        System.out.println(seconds);
+        response = RestAssured
+                .get(path)
+                .jsonPath();
+        String status = response.get("status");
+        if (status != "Job is NOT ready"){
+            System.out.println("The status is true");
+        }else {
+            System.out.println("The status is NOT true");
+        }
+        Thread.sleep(seconds * 1000);
+        response = RestAssured
+                .given()
+                .queryParam("token","token")
+                .get(path)
+                .jsonPath();
+        status = response.get("status");
+        if (status != "Job is NOT ready"){
+            System.out.println("The status is true");
+        }else {
+            System.out.println("The status is NOT true");
+        }
 
+    }
 }
