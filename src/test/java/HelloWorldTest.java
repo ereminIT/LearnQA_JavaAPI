@@ -2,9 +2,14 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class HelloWorldTest {
@@ -129,6 +134,13 @@ public class HelloWorldTest {
             i++;
         } while (true);
         System.out.println("Password found: "+passwords[i]);
+    }
+
+    // Ex10: Тест на короткую фразу
+    @ParameterizedTest
+    @ValueSource(strings ={"", "Hello, world", "Единственная надежная метрика качества кода — количество «чертей» в минуту", "Тут как раз 15!"})
+    public void ShortPhraseTest(String str){
+        assertTrue(str.length()>=15,"Длина текста должна быть больше 15 символов");
     }
 
 }
