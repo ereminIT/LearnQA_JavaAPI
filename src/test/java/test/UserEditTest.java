@@ -115,7 +115,7 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
-    @DisplayName("Attempt to change user data by another user")
+    @DisplayName("Attempting to change a user's email while logged in as the same user to a new email without the @ symbol")
     public void testEditUserInvalidEmail() {
         //GENERATE USER
         Map<String, String> userData = DateGenerator.getRegistrationData();
@@ -149,7 +149,7 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
-    @DisplayName("Attempt to change user data by another user")
+    @DisplayName("Attempting to change the user's firstName while being logged in as the same user, to a very short value of one character")
     public void testEditUserWithTooShortFirstName() {
         //GENERATE USER
         Map<String, String> userData = DateGenerator.getRegistrationData();

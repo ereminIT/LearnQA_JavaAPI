@@ -56,4 +56,22 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
+    @Step("Make a DELETE-request to delete user")
+    public Response deleteUser(String url, String userId, String token, String cookie) {
+        return given()
+                .filter(new AllureRestAssured())
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .delete(url + userId)
+                .andReturn();
+    }
+
+    @Step("Make a DELETE-request without authorization")
+    public Response deleteUserWithoutAuth(String url, String userId) {
+        return given()
+                .filter(new AllureRestAssured())
+                .delete(url + userId)
+                .andReturn();
+    }
+
 }
