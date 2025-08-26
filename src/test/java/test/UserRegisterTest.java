@@ -23,7 +23,7 @@ public class UserRegisterTest extends BaseTestCase {
         Map<String, String> userData = DateGenerator.getRegistrationData();
         userData.put("email", email);
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
+                .makePostRequest("https://playground.learnqa.ru/api_dev/user/", userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "Users with email '" + email + "' already exists");
@@ -36,7 +36,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData.put("email", email);
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
+                .makePostRequest("https://playground.learnqa.ru/api_dev/user/", userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 200);
         Assertions.assertJsonField(responseCreateAuth, "id");
@@ -49,7 +49,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData.put("email", email);
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
+                .makePostRequest("https://playground.learnqa.ru/api_dev/user/", userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "Invalid email format");
@@ -62,7 +62,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData.remove(fieldName);
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
+                .makePostRequest("https://playground.learnqa.ru/api_dev/user/", userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "The following required params are missed: " + fieldName);
@@ -74,7 +74,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData.put("username", "A");
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
+                .makePostRequest("https://playground.learnqa.ru/api_dev/user/", userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "The value of 'username' field is too short");
@@ -87,7 +87,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData.put("username", longName);
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
+                .makePostRequest("https://playground.learnqa.ru/api_dev/user/", userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "The value of 'username' field is too long");

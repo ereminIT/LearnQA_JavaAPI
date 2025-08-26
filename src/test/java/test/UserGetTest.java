@@ -19,7 +19,7 @@ public class UserGetTest extends BaseTestCase {
     @Test
     public void testGetUserDataNotAuth() {
         Response responseUserData = RestAssured
-                .get("https://playground.learnqa.ru/api/user/2")
+                .get("https://playground.learnqa.ru/api_dev/user/2")
                 .andReturn();
         Assertions.assertJsonField(responseUserData, "username");
         Assertions.assertJsonHasNotField(responseUserData, "firstName");
@@ -32,14 +32,14 @@ public class UserGetTest extends BaseTestCase {
         authData.put("email", "vinkotov@example.com");
         authData.put("password", "1234");
         Response responseGetAuth= apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/login",
+                "https://playground.learnqa.ru/api_dev/user/login",
                 authData
         );
 
         String header = this.getHeader(responseGetAuth, "x-csrf-token");
         String cookie = this.getCookie(responseGetAuth, "auth_sid");
         Response responseUserData = apiCoreRequests.makeGetRequest(
-                "https://playground.learnqa.ru/api/user/2",
+                "https://playground.learnqa.ru/api_dev/user/2",
                 header,
                 cookie
         );
@@ -53,7 +53,7 @@ public class UserGetTest extends BaseTestCase {
         authData.put("email", "vinkotov@example.com");
         authData.put("password", "1234");
         Response responseGetAuth= apiCoreRequests.makePostRequest(
-                "https://playground.learnqa.ru/api/user/login",
+                "https://playground.learnqa.ru/api_dev/user/login",
                 authData
         );
 
@@ -61,7 +61,7 @@ public class UserGetTest extends BaseTestCase {
         String cookie = this.getCookie(responseGetAuth, "auth_sid");
 
         Response responseUserData = apiCoreRequests.makeGetRequest(
-                "https://playground.learnqa.ru/api/user/1",
+                "https://playground.learnqa.ru/api_dev/user/1",
                 header,
                 cookie
         );
