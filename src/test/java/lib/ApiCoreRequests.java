@@ -66,12 +66,4 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a DELETE-request without authorization")
-    public Response deleteUserWithoutAuth(String url, String userId) {
-        return given()
-                .filter(new AllureRestAssured())
-                .delete(url + userId)
-                .andReturn();
-    }
-
 }
